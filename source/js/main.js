@@ -53,7 +53,16 @@
         return element.className && new RegExp("(^|\\s)" + className + "(\\s|$)").test(element.className);
     }
 
-    var medTextarea = document.getElementById('getMed');
+    var medTextarea = document.getElementById('getMed'),
+        autocompleteModal = document.querySelector('.get-med__modal'),
+        autocompleteResults = document.querySelector('.get-med__results'),
+        countProduct = [],
+        autocompleteProduct;
+
+    document.body.addEventListener('click', function() {
+        autocompleteModal.style.display = 'none';
+
+    });
 
     function autocomplete(val) {
         var medArray = [];
@@ -80,8 +89,6 @@
     medTextarea.onkeyup = function(e) {
         var medSearch = this.value;
         var medShow = [];
-        var autocompleteModal = document.querySelector('.get-med__modal'),
-            autocompleteResults = document.querySelector('.get-med__results');
         medShow = autocomplete(medSearch);
         if (medShow.length > 0 && medShow != '') {
 
@@ -126,34 +133,9 @@
                     }
                 }
             }
-
-            var getCoord = function(e) {
-                var carPos = medTextarea.selectionEnd,
-                    div = document.createElement('div'),
-                    span = document.createElement('span'),
-                    copyStyle = getComputedStyle(medTextarea),
-                    coords = {};
-                [].forEach.call(copyStyle, function(prop) {
-                    div.style[prop] = copyStyle[prop];
-                });
-                div.style.position = 'absolute';
-                document.body.appendChild(div);
-                div.textContent = medTextarea.value.substr(0, carPos);
-                span.textContent = medTextarea.value.substr(carPos) || '.';
-                div.appendChild(span);
-                coords = {
-                    'TOP': span.offsetTop
-                };
-                autocompleteModal.style.top = (coords.TOP + 140) + 'px';
-                document.querySelector('.product__box--icon').style.top = (coords.TOP + 105) + 'px';
-                autocompleteModal.style.display = 'block';
-                autocompleteModal.classList.add('active');
-                document.body.removeChild(div);
-
-            };
             medTextarea.addEventListener('input', getCoord);
 
-            var autocompleteProduct = document.querySelectorAll('.get-med__product');
+            autocompleteProduct = document.querySelectorAll('.get-med__product');
 
             document.querySelector('.load__on').style.display = 'block';
             document.querySelector('.load__done').style.display = 'none';
@@ -162,38 +144,50 @@
                 document.querySelector('.load__on').style.display = 'none';
                 document.querySelector('.load__done').style.display = 'block';
                 autocompleteProduct[0].classList.add('active');
-
-            }, 1000);
-
-            var clickProduct = function(e) {
-
-                var countProduct = [];
-
-                var getMedData = this.dataset.product;
-
-                if (countProduct.indexOf(getMedData) == -1) {
-                    countProduct.push(getMedData);
-
-                    for (var x = 0; x < countProduct.length; x++) {
-                        var valueToTextarea = countProduct[x] + '\n';
-                        medTextarea.value += valueToTextarea;
+                if (autocompleteProduct[0].children[3].children.length > 0) {
+                    if (autocompleteProduct[0].children[3].children.length == 3) {
+                        autocompleteProduct[0].children[3].children[0].style.display = 'none';
+                        autocompleteProduct[0].children[3].children[1].style.display = 'none';
+                        autocompleteProduct[0].children[3].children[2].style.display = 'block';
+                    } else {
+                        autocompleteProduct[0].children[3].children[0].style.display = 'none';
+                        autocompleteProduct[0].children[3].children[1].style.display = 'block';
                     }
                 }
 
-                getCoord();
-                document.querySelector('.product__box--icon').classList.remove('product__box--search');
-                medTextarea.focus();
-                autocompleteModal.style.display = 'none';
-                autocompleteResults.innerHTML = '';
 
-            }
 
-            for (var c = 0; c < autocompleteProduct.length; c++) {
-                autocompleteProduct[c].addEventListener('click', clickProduct);
-                autocompleteProduct[c].addEventListener('mouseover', function() {
-                    autocompleteProduct[0].classList.remove('active');
 
-                });
+            }, 4000);
+
+            for (var clicked in autocompleteProduct) {
+                if (autocompleteProduct.hasOwnProperty(clicked)) {
+                    autocompleteProduct[clicked].addEventListener('click', clickProduct);
+                    autocompleteProduct[clicked].addEventListener('mouseover', function() {
+                        if (autocompleteProduct[0].children[3].children.length > 0) {
+                            if (autocompleteProduct[0].children[3].children.length == 3) {
+                                autocompleteProduct[0].children[3].children[0].style.display = 'block';
+                                autocompleteProduct[0].children[3].children[1].style.display = 'block';
+                                autocompleteProduct[0].children[3].children[2].style.display = 'none';
+                            } else {
+                                autocompleteProduct[0].children[3].children[0].style.display = 'block';
+                                autocompleteProduct[0].children[3].children[1].style.display = 'none';
+                            }
+                        }
+                        autocompleteProduct[0].classList.remove('active');
+                        // if (autocompleteProduct[clicked].children[3].children.length > 0) {
+                        //     if (autocompleteProduct[clicked].children[3].children.length == 3) {
+                        //         autocompleteProduct[clicked].children[3].children[0].style.display = 'none';
+                        //         autocompleteProduct[clicked].children[3].children[1].style.display = 'none';
+                        //         autocompleteProduct[clicked].children[3].children[2].style.display = 'block';
+                        //     } else {
+                        //         autocompleteProduct[clicked].children[3].children[0].style.display = 'none';
+                        //         autocompleteProduct[clicked].children[3].children[1].style.display = 'block';
+                        //     }
+                        // }
+
+                    });
+                }
 
             }
         } else {
@@ -201,9 +195,65 @@
         }
     }
     medTextarea.onkeypress = function(e) {
+
+        setTimeout(function() {
+            if (document.querySelector('.get-med__results').children.length > 0) {
+
+                autocompleteModal.style.display = 'block';
+            }
+        }, 1000);
+
         switch (e.which) {
             case 13:
                 document.querySelector('.product__box--icon').classList.add('product__box--search');
 
         }
     };
+
+    var getCoord = function(e) {
+        var carPos = medTextarea.selectionEnd,
+            div = document.createElement('div'),
+            span = document.createElement('span'),
+            copyStyle = getComputedStyle(medTextarea),
+            coords = {};
+        [].forEach.call(copyStyle, function(prop) {
+            div.style[prop] = copyStyle[prop];
+        });
+        div.style.position = 'absolute';
+        document.body.appendChild(div);
+        div.textContent = medTextarea.value.substr(0, carPos);
+        span.textContent = medTextarea.value.substr(carPos) || '.';
+        div.appendChild(span);
+        coords = {
+            'TOP': span.offsetTop,
+            'LEFT': span.offsetLeft
+        };
+
+        autocompleteModal.style.top = (coords.TOP + 140) + 'px';
+        document.querySelector('.product__box--icon').style.top = (coords.TOP + 105) + 'px';
+        autocompleteModal.classList.add('active');
+        document.body.removeChild(div);
+
+
+    };
+
+    var clickProduct = function(e) {
+
+        var getMedData = this.dataset.product;
+
+        if (countProduct.indexOf(getMedData) == -1) {
+            countProduct.push(getMedData + '\n');
+
+            medTextarea.value = '';
+
+            var valueToTextarea = countProduct.join('\n');
+            medTextarea.value += valueToTextarea;
+        }
+
+        getCoord();
+        document.querySelector('.product__box--icon').classList.remove('product__box--search');
+        medTextarea.focus();
+        autocompleteModal.style.display = 'none';
+        autocompleteResults.innerHTML = '';
+
+    }
