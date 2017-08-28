@@ -1,0 +1,31 @@
+{
+    "name": "autocomplete-memed",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "browser-sync": "^2.11.0",
+        "browserify": "^12.0.0",
+        "coffeeify": "^1.1.0",
+        "gulp": "^3.9.0",
+        "gulp-clean-css": "^3.6.0",
+        "gulp-coffee": "^2.3.1",
+        "gulp-concat": "^2.6.0",
+        "gulp-htmlmin": "^3.0.0",
+        "gulp-if": "^2.0.0",
+        "gulp-imagemin": "^3.3.0",
+        "gulp-strip-debug": "^1.0.2",
+        "gulp-uglify": "^3.0.0",
+        "pump": "^1.0.2",
+        "stream-browserify": "^2.0.1",
+        "vinyl-buffer": "^1.0.0",
+        "vinyl-source-stream": "^1.1.0",
+        "vinyl-transform": "^1.0.0",
+        "yargs": "^3.29.0"
+    }
+}
