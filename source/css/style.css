@@ -103,7 +103,8 @@ p {
     cursor: pointer;
 }
 
-.get-med__product:hover {
+.get-med__product:hover,
+.get-med__product.active {
     background-color: #f0f1f3;
 }
 
@@ -250,6 +251,15 @@ p {
 
 .price__equal {
     font-size: 12px;
+}
+
+.price__sintese {
+    font-size: 12px;
+    padding: 0 2px;
+    background-color: #eff1f3;
+    text-align: center;
+    border-radius: 4px;
+    display: none;
 }
 
 .text__add {
