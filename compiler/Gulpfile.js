@@ -62,10 +62,10 @@ gulp.task('imagemin', () => {
         .pipe(gulp.dest(path.dist.img))
 });
 
-gulp.task('default', ['browser-sync', 'minify-html', 'minify-css', 'minify-js', 'imagemin', 'fonts'], () => {
+gulp.task('default', ['browser-sync', 'minify-html', 'minify-css', 'minify-js', 'imagemin'], () => {
 
     gulp.watch(path.dist.base + '/**/index.html').on('change', browserSync.reload);
-
+    gulp.watch(path.dist.base + '/**/*.css').on('change', browserSync.reload);
     gulp.watch(path.dist.js + '/**/*.js').on('change', browserSync.reload);
 
     // Tasks Watch
