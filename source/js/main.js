@@ -173,11 +173,12 @@
 
                 if (countProduct.indexOf(getMedData) == -1) {
                     countProduct.push(getMedData);
+
+                    for (var x = 0; x < countProduct.length; x++) {
+                        var valueToTextarea = countProduct[x] + '\n';
+                        medTextarea.value += valueToTextarea;
+                    }
                 }
-
-                var valueToTextarea = countProduct.join('\n');
-
-                medTextarea.value += valueToTextarea;
 
                 getCoord();
                 document.querySelector('.product__box--icon').classList.remove('product__box--search');
