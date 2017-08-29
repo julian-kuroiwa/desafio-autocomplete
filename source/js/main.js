@@ -107,7 +107,7 @@
 
                         var priceMed = minPrice == maxPrice ? '<p class="price__equal">R$' + minPrice + '</p>' : '<p class="price__min">de R$' + minPrice + '</p><p class="price__max">até R$' + maxPrice + '</p>';
 
-                        autocompleteResults.innerHTML += '<div class="get-med__product" data-product="' + name + ', ' + manufacturer + '">' +
+                        autocompleteResults.innerHTML += '<a href="#" class="get-med__product" data-product="' + name + ', ' + manufacturer + '" title="' + name + ', ' + manufacturer + '">' +
                             '<div class="product__box product__box--label">' +
                             '<div class="label__package">' + genericMed + '</div>' +
                             '</div>' +
@@ -123,7 +123,7 @@
                             priceMed +
                             '<p class="price__sintese">Síntese</p>' +
                             '</div>' +
-                            '</div>';
+                            '</a>';
 
 
                     }
@@ -206,6 +206,7 @@
 
     var clickProduct = function(e) {
 
+        e.preventDefault();
         var getMedData = this.dataset.product;
 
         if (countProduct.indexOf(getMedData) == -1) {

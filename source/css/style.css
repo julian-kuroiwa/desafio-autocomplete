@@ -71,10 +71,18 @@ p {
     font-size: 13px;
 }
 
+.typeof__item a {
+    color: #000;
+    text-decoration: none;
+}
+
 .typeof__item--active {
     background-color: #555459;
-    color: #fff;
     border-radius: 4px;
+}
+
+.typeof__item--active a {
+    color: #fff;
 }
 
 .typeof__load {
@@ -100,7 +108,9 @@ p {
 
 .get-med__product {
     padding: 10px 0px 10px 17px;
-    cursor: pointer;
+    display: block;
+    color: #000;
+    text-decoration: none;
 }
 
 .get-med__product:hover,
