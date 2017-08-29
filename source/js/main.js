@@ -49,10 +49,6 @@
         titularidade: 'Referência'
     }]
 
-    function hasClass(element, className) {
-        return element.className && new RegExp("(^|\\s)" + className + "(\\s|$)").test(element.className);
-    }
-
     var medTextarea = document.getElementById('getMed'),
         autocompleteModal = document.querySelector('.get-med__modal'),
         autocompleteResults = document.querySelector('.get-med__results'),
@@ -144,48 +140,15 @@
                 document.querySelector('.load__on').style.display = 'none';
                 document.querySelector('.load__done').style.display = 'block';
                 autocompleteProduct[0].classList.add('active');
-                if (autocompleteProduct[0].children[3].children.length > 0) {
-                    if (autocompleteProduct[0].children[3].children.length == 3) {
-                        autocompleteProduct[0].children[3].children[0].style.display = 'none';
-                        autocompleteProduct[0].children[3].children[1].style.display = 'none';
-                        autocompleteProduct[0].children[3].children[2].style.display = 'block';
-                    } else {
-                        autocompleteProduct[0].children[3].children[0].style.display = 'none';
-                        autocompleteProduct[0].children[3].children[1].style.display = 'block';
-                    }
-                }
-
-
-
-
-            }, 4000);
+            }, 3500);
 
             for (var clicked in autocompleteProduct) {
                 if (autocompleteProduct.hasOwnProperty(clicked)) {
+
+                    var childrenProduct = autocompleteProduct[clicked].children;
                     autocompleteProduct[clicked].addEventListener('click', clickProduct);
                     autocompleteProduct[clicked].addEventListener('mouseover', function() {
-                        if (autocompleteProduct[0].children[3].children.length > 0) {
-                            if (autocompleteProduct[0].children[3].children.length == 3) {
-                                autocompleteProduct[0].children[3].children[0].style.display = 'block';
-                                autocompleteProduct[0].children[3].children[1].style.display = 'block';
-                                autocompleteProduct[0].children[3].children[2].style.display = 'none';
-                            } else {
-                                autocompleteProduct[0].children[3].children[0].style.display = 'block';
-                                autocompleteProduct[0].children[3].children[1].style.display = 'none';
-                            }
-                        }
                         autocompleteProduct[0].classList.remove('active');
-                        // if (autocompleteProduct[clicked].children[3].children.length > 0) {
-                        //     if (autocompleteProduct[clicked].children[3].children.length == 3) {
-                        //         autocompleteProduct[clicked].children[3].children[0].style.display = 'none';
-                        //         autocompleteProduct[clicked].children[3].children[1].style.display = 'none';
-                        //         autocompleteProduct[clicked].children[3].children[2].style.display = 'block';
-                        //     } else {
-                        //         autocompleteProduct[clicked].children[3].children[0].style.display = 'none';
-                        //         autocompleteProduct[clicked].children[3].children[1].style.display = 'block';
-                        //     }
-                        // }
-
                     });
                 }
 
@@ -196,17 +159,10 @@
     }
     medTextarea.onkeypress = function(e) {
 
-        setTimeout(function() {
-            if (document.querySelector('.get-med__results').children.length > 0) {
-
-                autocompleteModal.style.display = 'block';
-            }
-        }, 1000);
-
         switch (e.which) {
             case 13:
                 document.querySelector('.product__box--icon').classList.add('product__box--search');
-
+                autocompleteModal.style.display = 'none';
         }
     };
 
@@ -234,6 +190,17 @@
         autocompleteModal.classList.add('active');
         document.body.removeChild(div);
 
+        if (coords.LEFT === 60) {
+            autocompleteModal.style.display = 'none';
+
+        } else {
+            setTimeout(function() {
+                if (document.querySelector('.get-med__results').children.length > 0) {
+
+                    autocompleteModal.style.display = 'block';
+                }
+            }, 1000);
+        }
 
     };
 

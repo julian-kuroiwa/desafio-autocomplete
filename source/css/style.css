@@ -268,6 +268,20 @@ p {
     transform: translateY(-50%);
 }
 
+.get-med__product:hover .price__min,
+.get-med__product:hover .price__max,
+.get-med__product:hover .price__equal,
+.get-med__product.active .price__min,
+.get-med__product.active .price__max,
+.get-med__product.active .price__equal {
+    display: none;
+}
+
+.get-med__product:hover .price__sintese,
+.get-med__product.active .price__sintese {
+    display: block;
+}
+
 .text__add {
     display: inline-block;
     font-size: 13px;
